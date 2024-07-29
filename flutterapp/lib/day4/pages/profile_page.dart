@@ -11,5 +11,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Center(child: Text("This is profile page"),);
+    
   }
 }

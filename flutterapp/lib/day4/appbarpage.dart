@@ -63,6 +63,8 @@ class _AppbarpageState extends State<Appbarpage> {
       ),
 
       body: _pages[currentIndex],//Displays the current page based on currentIndex.
+
+      
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: const Color.fromARGB(255, 62, 111, 63),
