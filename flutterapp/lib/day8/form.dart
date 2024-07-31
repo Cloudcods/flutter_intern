@@ -15,6 +15,19 @@ class _SharedperferenceState extends State<Sharedperference> {
   final _emailController = TextEditingController();
   String? _retrievedUsername;
   String? _retrievedEmail;
+    @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _usernameController.text = prefs.getString('username') ?? '';
+      _emailController.text = prefs.getString('email') ?? '';
+    });
+  }
 
    Future<void> _saveData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -35,8 +48,8 @@ class _SharedperferenceState extends State<Sharedperference> {
     final prefs=await SharedPreferences.getInstance();
     await prefs.clear();
     setState(() {
-      _retrievedUsername=null;
-      _retrievedEmail=null;
+      _retrievedUsername='';
+      _retrievedEmail='';
     });
    
    ScaffoldMessenger.of(context).showSnackBar(
