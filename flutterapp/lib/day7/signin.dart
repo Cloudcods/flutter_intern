@@ -27,7 +27,7 @@ class _SigninPageState extends State<SigninPage> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'User Email',
-                  hintText: 'Enter valid mail id as abc@gmail.com',
+                  hintText: 'Enter valid mail',
                 ),
               ),
               SizedBox(height: 10), // Add space between the TextField and the next element
@@ -35,7 +35,7 @@ class _SigninPageState extends State<SigninPage> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
-                  hintText: 'Enter your password',
+                  hintText: '*****************',
                 ),
                 obscureText: true, // To obscure the password
               ),

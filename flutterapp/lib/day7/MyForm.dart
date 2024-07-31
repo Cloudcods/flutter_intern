@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FormPage extends StatefulWidget {
   const FormPage({super.key});
@@ -9,8 +10,8 @@ class FormPage extends StatefulWidget {
 }
 
 class _FormPageState extends State<FormPage> {
-    final _formKey = GlobalKey<FormState>();
-    final _nameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _addressController = TextEditingController();
   final _emailController = TextEditingController();
@@ -21,150 +22,172 @@ class _FormPageState extends State<FormPage> {
   String? _address;
   String? _email;
   String? _password;
-  
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _nameController.text = prefs.getString('username') ?? '';
+      _lastNameController.text = prefs.getString('lastname') ?? '';
+      _addressController.text = prefs.getString('address') ?? '';
+      _emailController.text = prefs.getString('email') ?? '';
+      _passwordController.text = prefs.getString('password') ?? '';
+    });
+  }
+
+  Future<void> _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('username', _nameController.text);
+    await prefs.setString('lastname', _lastNameController.text);
+    await prefs.setString('address', _addressController.text);
+    await prefs.setString('email', _emailController.text);
+    await prefs.setString('password', _passwordController.text);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Data Saved')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Signup Form"),
-         backgroundColor: Colors.amber[800],
-         centerTitle: true,
+        backgroundColor: Colors.amber[800],
+        centerTitle: true,
       ),
-          body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  fillColor: Colors.grey,
-                  focusColor: Colors.grey,
-                  labelText: 'Enter your Name',
+      body: Center(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(10),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'User Name',
+                    hintText: 'Enter Name',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your Name';
-                  }
-                  return null;
-                },
-              ),
+                SizedBox(height: 10),
                 TextFormField(
                   controller: _lastNameController,
-                decoration: const InputDecoration(
-                  fillColor: Colors.grey,
-                  focusColor: Colors.grey,
-                  labelText: 'Enter your LastName',
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'LastName',
+                    hintText: 'Enter LastName',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your last name';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your LastName';
-                  }
-                  return null;
-                },
-              ),
+                SizedBox(height: 10),
                 TextFormField(
                   controller: _addressController,
-                decoration: const InputDecoration(
-                  fillColor: Colors.grey,
-                  focusColor: Colors.grey,
-                  labelText: 'Enter your Address',
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Address',
+                    hintText: 'Enter Address',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your address';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your Address';
-                  }
-                  return null;
-                },
-              ),
-                    TextFormField(
-                      controller: _emailController,
-                decoration: const InputDecoration(
-                  fillColor: Colors.grey,
-                  focusColor: Colors.grey,
-                  labelText: 'Enter your Email',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your Email';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
+                SizedBox(height: 10),
                 TextFormField(
-                  controller:_passwordController,
-                decoration: const InputDecoration(
-                  fillColor: Colors.grey,
-                  focusColor: Colors.grey,
-                  labelText: 'Enter your Password',
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Your Email',
+                    hintText: 'Enter Email',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter   your Password';
-                  }
-                  return null;
-                },
+                SizedBox(height: 10),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter password',
+                    hintText: 'Your password',
+                  ),
                   obscureText: true,
-              ),
-                 Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: ElevatedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                if (_formKey.currentState!.validate()) {
-              setState(() {
-                  _name=_nameController.text;
-                  _lastName=_lastNameController.text;
-                  _address=_addressController.text;
-                  _email=_emailController.text;
-                  _password=_passwordController.text;
-                });
-    // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
-                  );
-                }
-              },
-              child: const Text('Submit'),
-              
-            ),
-            ),
-                  if (_name != null &&
-                  _lastName != null &&
-                  _address != null &&
-                  _email != null &&
-                  _password != null)
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Name: $_name'),
-                      Text('LastName: $_lastName'),
-                      Text('Address: $_address'),
-                      Text('Email: $_email'),
-                      Text('Password: $_password'),
-                    ],
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          _name = _nameController.text;
+                          _lastName = _lastNameController.text;
+                          _address = _addressController.text;
+                          _email = _emailController.text;
+                          _password = _passwordController.text;
+                        });
+                        _saveData();
+                      }
+                    },
+                    child: const Text('Submit'),
                   ),
                 ),
-
-                
-             SizedBox(
-              height: 130,
+                if (_name != null &&
+                    _lastName != null &&
+                    _address != null &&
+                    _email != null &&
+                    _password != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Name: $_name'),
+                        Text('LastName: $_lastName'),
+                        Text('Address: $_address'),
+                        Text('Email: $_email'),
+                        Text('Password: $_password'),
+                      ],
+                    ),
+                  ),
+                SizedBox(
+                  height: 130,
+                ),
+                Text('New User? Please Login')
+              ],
             ),
-            Text('New User? Please Login')
-             ],
-
-              ),
-            ),
-            
-            ),
-
-          );
+          ),
+        ),
+      ),
+    );
   }
 }

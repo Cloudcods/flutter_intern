@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutterapp/day7/signin.dart';
+import 'package:flutterapp/day7/MyForm.dart';
+
 
 
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 64, 37, 110)),
         useMaterial3: true,
       ),
-      home:  const SigninPage()
+      home:  const FormPage()
     );
   }
 }
