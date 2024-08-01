@@ -96,6 +96,7 @@ class _SharedperferenceState extends State<Sharedperference> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
+                      
                       onPressed: _saveData,
                       child: Text('Save'),
                     ),
