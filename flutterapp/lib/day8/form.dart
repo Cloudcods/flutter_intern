@@ -1,31 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Sharedperference extends StatefulWidget {
-  const Sharedperference({super.key});
+class SharedPreferenceDemo extends StatefulWidget {
+  const SharedPreferenceDemo({super.key});
 
   @override
-  State<Sharedperference> createState() => _SharedperferenceState();
+  State<SharedPreferenceDemo> createState() => _SharedPreferenceDemoState();
 }
 
-class _SharedperferenceState extends State<Sharedperference> {
+class _SharedPreferenceDemoState extends State<SharedPreferenceDemo> {
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   String? _retrievedUsername;
   String? _retrievedEmail;
-    @override
-  void initState() {
-    super.initState();
-    _loadData();
-  }
-
-  Future<void> _loadData() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _usernameController.text = prefs.getString('username') ?? '';
-      _emailController.text = prefs.getString('email') ?? '';
-    });
-  }
 
   @override
   void initState() {
@@ -62,13 +49,8 @@ class _SharedperferenceState extends State<Sharedperference> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     setState(() {
-<<<<<<< HEAD
       _retrievedUsername = '';
       _retrievedEmail = '';
-=======
-      _retrievedUsername='';
-      _retrievedEmail='';
->>>>>>> e0327ba10b4de695866dd8f0d41d2bf316a639ab
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -114,7 +96,6 @@ class _SharedperferenceState extends State<Sharedperference> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
-                      
                       onPressed: _saveData,
                       child: Text('Save'),
                     ),

@@ -22,7 +22,7 @@ class _ListViewPageState extends State<ListViewPage> {
         itemCount: items.length,
         itemBuilder: (context, index) {
           return ListTile(
-            leading: Image.asset('assets/myicon.jpg'),
+            leading: Image.asset('assets/images/myicon.jpg'),
             title: Text(items[index]),
             onTap: () {
               Navigator.push(
@@ -37,8 +37,4 @@ class _ListViewPageState extends State<ListViewPage> {
   }
 }
 
-void main() {
-  runApp(const MaterialApp(
-    home: ListViewPage(),
-  ));
-}
+

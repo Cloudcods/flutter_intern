@@ -26,7 +26,7 @@ class PageViewExample extends StatelessWidget {
           children: [
             ClipOval(
               child: Image.asset(
-                'assets/passport.jpeg',
+                'assets/images/passport.jpeg',
                 fit: BoxFit.fill,
                 width: 150,
                 height: 150,
@@ -74,8 +74,4 @@ class MyClip extends CustomClipper<Rect> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: PageViewDemo(),
-  ));
-}
+
